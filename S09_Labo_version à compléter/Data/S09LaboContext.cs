@@ -16,6 +16,8 @@ public partial class S09LaboContext : DbContext
     {
     }
 
+    public virtual DbSet<Changelog> Changelogs { get; set; }
+
     public virtual DbSet<Chanson> Chansons { get; set; }
 
     public virtual DbSet<Chanteur> Chanteurs { get; set; }
@@ -25,6 +27,13 @@ public partial class S09LaboContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Changelog>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__changelo__3213E83F7089AEA0");
+
+            entity.Property(e => e.InstalledOn).HasDefaultValueSql("(getdate())");
+        });
+
         modelBuilder.Entity<Chanson>(entity =>
         {
             entity.HasKey(e => e.ChansonId).HasName("PK_Chanson_ChansonID");
